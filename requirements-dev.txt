@@ -1,0 +1,39 @@
+# Development and testing dependencies
+# Install with: pip install -r requirements-dev.txt
+
+# Core dependencies (from requirements.txt)
+-r requirements.txt
+
+# Testing
+pytest>=7.0
+pytest-cov>=4.0
+pytest-xdist>=3.0
+pytest-asyncio>=0.21.0
+
+# Code quality
+black>=23.0
+isort>=5.0
+pylint>=2.0
+flake8>=6.0
+mypy>=1.0
+
+# API development
+fastapi>=0.104.0
+uvicorn>=0.24.0
+pydantic>=2.0
+
+# Documentation
+sphinx>=6.0
+sphinx-rtd-theme>=1.3
+
+# Development tools
+ipython>=8.0
+jupyter>=1.0
+notebook>=7.0
+
+# Optional: Causal inference
+dowhy>=0.11  # Causal inference library
+
+# Monitoring and profiling
+py-spy>=0.3
+memory-profiler>=0.61

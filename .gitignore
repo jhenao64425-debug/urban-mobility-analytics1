@@ -1,0 +1,35 @@
+# Virtual environments
+venv/
+env/
+.venv
+
+# Python
+__pycache__/
+*.py[cod]
+*.so
+build/
+dist/
+*.egg-info/
+
+# Data (large files)
+data/mobility.db
+data/raw/*.csv
+
+# Logs
+logs/
+*.log
+
+# Models (large)
+models/*.pkl
+
+# IDE
+.vscode/
+.idea/
+*.swp
+
+# Environment
+.env
+.env.local
+
+# OS
+.DS_Store
