@@ -38,18 +38,31 @@ CSV_PATH = ROOT_DIR / "data" / "raw" / "route_weather_data.csv"
 @st.cache_resource
 def get_database():
     """Cache database connection."""
-    return RouteDatabase(CSV_PATH, DB_PATH)
+    try:
+        return RouteDatabase(CSV_PATH, DB_PATH)
+    except Exception as e:
+        st.warning(f"⚠️ Could not connect to database: {str(e)}")
+        return None
 
 
 @st.cache_resource
 def get_analytics():
     """Cache analytics instance."""
-    return MobilityAnalytics(DB_PATH)
+    try:
+        return MobilityAnalytics(DB_PATH)
+    except Exception as e:
+        st.warning(f"⚠️ Could not load analytics: {str(e)}")
+        return None
 
 
 def initialize_session_state():
     """Inicializa el estado de sesión."""
     db = get_database()
+
+    if db is None:
+        st.session_state.available_routes = []
+        st.session_state.route_statistics = {}
+        return
 
     if "available_routes" not in st.session_state:
         routes = db.get_available_routes()
@@ -81,6 +94,8 @@ def load_data_for_route(origin: str, destination: str, start_date: datetime, end
 def get_route_statistics(origin: str, destination: str) -> dict:
     """Obtiene estadísticas de una ruta."""
     db = get_database()
+    if db is None:
+        return {}
     return db.get_route_statistics(origin, destination, hours=24)
 
 
