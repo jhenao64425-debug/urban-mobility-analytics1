@@ -1,0 +1,40 @@
+version: '3.8'
+
+services:
+  # Recolector de datos
+  collector:
+    build: .
+    command: python -m src.route_extraction --interval 120
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    environment:
+      - PYTHONUNBUFFERED=1
+    restart: unless-stopped
+    networks:
+      - mobility-network
+
+  # Dashboard Streamlit
+  dashboard:
+    build: .
+    command: streamlit run streamlit_app/app.py --server.port 8501 --server.address 0.0.0.0
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    environment:
+      - PYTHONUNBUFFERED=1
+    depends_on:
+      - collector
+    restart: unless-stopped
+    networks:
+      - mobility-network
+
+volumes:
+  data:
+  logs:
+
+networks:
+  mobility-network:
+    driver: bridge

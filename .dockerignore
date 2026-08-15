@@ -1,0 +1,12 @@
+venv
+.git
+.gitignore
+data/mobility.db
+data/raw/*.csv
+logs/
+models/*.pkl
+__pycache__
+*.pyc
+.vscode
+.idea
+*.tmp
